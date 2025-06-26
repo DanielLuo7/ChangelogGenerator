@@ -1,0 +1,30 @@
+{
+  "name": "changeloggenerator",
+  "version": "1.0.0",
+  "description": "cli that uses llms to generate changelogs",
+  "main": "changelogger.js",
+  "bin": {
+    "changelogger": "bin/cli.js"
+  },
+  "scripts": {
+    "start": "ts-node src/cli.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/commander": "^2.12.5",
+    "@types/node": "^24.0.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "axios": "^1.10.0",
+    "commander": "^14.0.0",
+    "dotenv": "^16.6.0",
+    "simple-git": "^3.28.0",
+    "undici-types": "^7.8.0"
+  },
+  "keywords": []
+}

@@ -11,6 +11,7 @@ const simple_git_1 = __importDefault(require("simple-git"));
 const git = (0, simple_git_1.default)();
 const CACHE_FILE = path_1.default.resolve(".changelogger");
 async function getLastCommitHash() {
+    console.log("we should be in here right");
     try {
         return fs_1.default.readFileSync(CACHE_FILE, "utf-8").trim();
     }

@@ -26,7 +26,7 @@ async function generateChangelog(options) {
     }
     else if (options.publish) {
         const latest = await git.revparse([to]);
-        console.log("The following is a preview of your generated changelog.", changelog);
+        console.log("The following is a preview of your generated changelog.\n", changelog);
         const publish = ((await (0, common_1.prompt)("Would you like to publish your changelog? (y/N)")).toLowerCase() === "y");
         if (publish) {
             await (0, publish_1.publishChangeLog)(changelog, from, latest, commits);

@@ -13,7 +13,7 @@ type ChangelogEntry = {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const repoName = context.params?.repo as string;
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("changelogs")
     .select("*")
     .eq("repo_name", repoName)
@@ -63,10 +63,10 @@ export default function RepoChangelogsPage({
                           {children}
                         </li>
                       ),
-                      h2: ({ node, ...props }) => (
+                      h2: ({ ...props }) => (
                         <h2 className="text-base font-bold mt-4 mb-2" {...props} />
                       ),
-                      p: ({ node, ...props }) => (
+                      p: ({ ...props }) => (
                         <p className="text-sm leading-relaxed" {...props} />
                       ),
                     }}

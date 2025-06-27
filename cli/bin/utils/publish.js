@@ -8,7 +8,9 @@ exports.getLastPublished = getLastPublished;
 const git_1 = require("../utils/git");
 const simple_git_1 = __importDefault(require("simple-git"));
 const git = (0, simple_git_1.default)();
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.BASE_URL || (process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://changelogger-lemon.vercel.app");
 async function publishChangeLog(changelog, from, to, commits) {
     const payload = {
         repoName: await (0, git_1.getRepoName)(),

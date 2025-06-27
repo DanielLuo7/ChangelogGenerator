@@ -15,11 +15,12 @@ export async function summarizeChangeLog(changelog: string) {
     const userPrompt = `You are generating a customer-facing changelog from the following Git commit logs.
 
                         ### Strict Rules:
-                        -  Only include features, improvements, or fixes that are meaningful to **end users**
-                        -  Do NOT include commit hashes, developer notes, PR numbers, or internal technical changes
-                        -  Never include lines like "[Commit: abc123]" or "Merge pull request"
-                        -  Output must be **well-formatted Markdown**, with human-friendly descriptions
-                        -  Never include any markdown links
+                        -  Only include features, improvements, or fixes that are meaningful to **end users**.
+                        -  Do NOT include commit hashes, developer notes, PR numbers, or internal technical changes.
+                        -  Never include lines like "[Commit: abc123]" or "Merge pull request".
+                        -  Output must be **well-formatted Markdown**, with human-friendly descriptions.
+                        -  Never include any markdown links.
+                        -  ONLY ouptut the bullet point summary. No intro or conclusion.
 
                         ### Formatting Style:
                         - Group into sections like **"New Features"**, **"Improvements"**, or **"Fixes"**

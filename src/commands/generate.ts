@@ -27,6 +27,8 @@ export async function generateChangelog( options: {
         console.log(changelog)
     } else if (options.publish) {
         await publishChangeLog(changelog)
+        const hash = (await git.revparse([to])).trim();
+        setLastCommitHash(hash)
     }
 
 }

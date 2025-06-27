@@ -17,7 +17,7 @@ program
 program
     .command("generate")
     .description('Generate changelog based on git commit history')
-    .option('--from <ref>', 'Start ref (commit, tag, or branch)', 'HEAD~10')
+    .option('--from <ref>', 'Start ref (commit, tag, or branch)')
     .option('--to <ref>', 'End ref (commit, tag, or branch)', 'HEAD')
     .option('--preview', 'Preview changelog in console')
     .option('--output <file>', 'Output file (default: stdout)')

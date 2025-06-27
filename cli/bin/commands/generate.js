@@ -24,11 +24,13 @@ async function generateChangelog(options) {
     if (options.output) {
         fs_1.default.writeFileSync(options.output, changelog, "utf-8");
     }
-    else if (options.preview) {
-        console.log(changelog);
-    }
     else if (options.publish) {
         const latest = await git.revparse([to]);
-        await (0, publish_1.publishChangeLog)(changelog, from, latest, commits);
+        console.log("The following is a preview of your generated changelog.", changelog);
+        const publish = ((await (0, common_1.prompt)("Would you like to publish your changelog? (y/N)")).toLowerCase() === "y");
+        if (publish) {
+            await (0, publish_1.publishChangeLog)(changelog, from, latest, commits);
+        }
+        process.exit();
     }
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import readline from "readline";
 
 const API_KEY = process.env.API_KEY;
 const MODEL = "mistralai/mistral-7b-instruct"
@@ -67,4 +68,18 @@ function cleanSummaryOutput(markdown: string): string {
       .replace(/[ \t]+$/gm, '')
       .trim();
   }
+
+export function prompt(question: string): Promise<string> {
+    const readLine = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    return new Promise((resolve) =>
+        readLine.question(question, (answer) => {
+            readLine.close();
+            resolve(answer.trim());
+        })
+    );
+}
   

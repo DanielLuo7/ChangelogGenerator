@@ -1,21 +1,7 @@
 import fs from "fs";
 import path from "path";
-import readline from "readline";
 import os from "os";
-
-function prompt(question: string): Promise<string> {
-    const readLine = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-
-    return new Promise((resolve) =>
-        readLine.question(question, (answer) => {
-            readLine.close();
-            resolve(answer.trim());
-        })
-    );
-}
+import { prompt } from "../utils/common";
 
 async function writeToShellConfig(key: string, value: string) {
     const shell = process.env.SHELL || "";

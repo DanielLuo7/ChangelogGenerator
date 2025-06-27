@@ -1,7 +1,7 @@
 import fs from "fs";
 import { getCommitMessages } from "../utils/git";
 import { getLastPublished, publishChangeLog } from "../utils/publish";
-import { summarizeChangeLog } from "../utils/common";
+import { prompt, summarizeChangeLog } from "../utils/common";
 import simpleGit from "simple-git";
 
 const git = simpleGit();
@@ -28,11 +28,14 @@ export async function generateChangelog( options: {
 
     if (options.output) {
         fs.writeFileSync(options.output, changelog, "utf-8");
-    } else if (options.preview) {
-        console.log(changelog)
-    } else if (options.publish) {
+    }  else if (options.publish) {
         const latest = await git.revparse([to]);
-        await publishChangeLog(changelog, from, latest, commits)
+        console.log("The following is a preview of your generated changelog.\n", changelog);
+        const publish = ((await prompt("Would you like to publish your changelog? (y/N)")).toLowerCase() === "y");
+        if (publish) {
+            await publishChangeLog(changelog, from, latest, commits);
+        }
+        process.exit();
     }
 
 }

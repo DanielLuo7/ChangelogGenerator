@@ -2,8 +2,7 @@ import supabase from "@/lib/supabase"
 import Link from "next/link";
 
 export async function getServerSideProps() {
-    const { data, error } = await supabase.from("changelogs").select("repo_name").order("published_at", {ascending: false});
-    // error handling
+    const { data } = await supabase.from("changelogs").select("repo_name").order("published_at", {ascending: false});
     const repoNames = Array.from(new Set((data || []).map(c => c.repo_name)));
 
     return { props: { repoNames }};

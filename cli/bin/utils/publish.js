@@ -8,6 +8,7 @@ exports.getLastPublished = getLastPublished;
 const git_1 = require("../utils/git");
 const simple_git_1 = __importDefault(require("simple-git"));
 const git = (0, simple_git_1.default)();
+const BASE_URL = process.env.BASE_URL;
 async function publishChangeLog(changelog, from, to, commits) {
     const payload = {
         repoName: await (0, git_1.getRepoName)(),
@@ -17,7 +18,7 @@ async function publishChangeLog(changelog, from, to, commits) {
         summary: changelog,
         rawCommits: commits
     };
-    const response = await fetch("http://localhost:3000/api/publish", {
+    const response = await fetch(`${BASE_URL}/api/publish`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -32,7 +33,7 @@ async function publishChangeLog(changelog, from, to, commits) {
 }
 async function getLastPublished() {
     const repoName = await (0, git_1.getRepoName)();
-    const res = await fetch(`http://localhost:3000/api/latest?repo=${encodeURIComponent(repoName)}`);
+    const res = await fetch(`${BASE_URL}/api/latest?repo=${encodeURIComponent(repoName)}`);
     if (res.status === 500) {
         throw new Error("Internal server error. Could not find last published commit.");
     }

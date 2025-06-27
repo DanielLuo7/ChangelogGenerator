@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCommitMessages = getCommitMessages;
+exports.getRepoUrl = getRepoUrl;
+exports.getRepoName = getRepoName;
 const simple_git_1 = __importDefault(require("simple-git"));
 const git = (0, simple_git_1.default)();
 async function getCommitMessages(from, to) {
@@ -16,4 +18,14 @@ async function getCommitMessages(from, to) {
         console.error(`Failing from ${from} to ${to}`, err);
         return [];
     }
+}
+async function getRepoUrl() {
+    const remotes = await git.getRemotes(true);
+    const origin = remotes.find(remote => remote.name == "origin");
+    return origin?.refs.fetch || "unknown";
+}
+async function getRepoName() {
+    const url = await getRepoUrl();
+    const match = url.match(/([^\/:]+\/[^\/\.]+)(\.git)?$/);
+    return match ? match[1] : "unknown";
 }

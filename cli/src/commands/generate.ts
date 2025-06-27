@@ -1,7 +1,6 @@
 import fs from "fs";
 import { getCommitMessages } from "../utils/git";
-import { getLastCommitHash, setLastCommitHash } from "../utils/cache";
-import { publishChangeLog } from "../utils/publish";
+import { getLastPublished, publishChangeLog } from "../utils/publish";
 import { summarizeChangeLog } from "../utils/common";
 import simpleGit from "simple-git";
 
@@ -15,7 +14,7 @@ export async function generateChangelog( options: {
     publish?: boolean;
 }) {
     const to = options.to || "HEAD";
-    const from = options.from || await getLastCommitHash();
+    const from = options.from || await getLastPublished();
     const commits = await getCommitMessages(from, to);
     let changelog = `# Changelog\n\n## Changes ${from} to ${to}\n\n`; 
     changelog += commits.join("\n");
@@ -26,9 +25,8 @@ export async function generateChangelog( options: {
     } else if (options.preview) {
         console.log(changelog)
     } else if (options.publish) {
-        await publishChangeLog(changelog)
-        const hash = (await git.revparse([to])).trim();
-        setLastCommitHash(hash)
+        const latest = await git.revparse([to]);
+        await publishChangeLog(changelog, from, latest, commits)
     }
 
 }

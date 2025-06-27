@@ -12,3 +12,15 @@ export async function getCommitMessages(from: string, to: string): Promise<strin
         return [];
     }
 }
+
+export async function getRepoUrl() {
+    const remotes = await git.getRemotes(true);
+    const origin = remotes.find(remote => remote.name == "origin");
+    return origin?.refs.fetch || "unknown";
+}
+
+export async function getRepoName() {
+    const url = await getRepoUrl();
+    const match = url.match(/([^\/:]+\/[^\/\.]+)(\.git)?$/);
+    return match ? match[1] : "unknown";
+}

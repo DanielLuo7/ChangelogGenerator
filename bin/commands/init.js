@@ -31,6 +31,7 @@ async function writeToShellConfig(key, value) {
     else {
         console.log(`${key} already exists in ${targetFile}`);
     }
+    console.log(`To use API key, run: source ${targetFile}`);
 }
 function appendToGitIgnore(file) {
     const gitIgnorePath = path_1.default.resolve(".gitignore");
@@ -56,7 +57,7 @@ async function init() {
     else {
         const envPath = path_1.default.resolve(".env");
         fs_1.default.writeFileSync(envPath, `API_KEY=${apiKey}\n`);
-        console.log("Written to .env file");
-        appendToGitIgnore(envPath);
+        appendToGitIgnore(".env");
+        console.log("API key written to .env file and added to .gitignore");
     }
 }

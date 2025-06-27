@@ -5,8 +5,6 @@ require("dotenv/config");
 const commander_1 = require("commander");
 const generate_1 = require("./commands/generate");
 const init_1 = require("./commands/init");
-console.log("hi");
-console.log("process", process.env.API_KEY);
 const program = new commander_1.Command();
 program
     .name("changelogger")

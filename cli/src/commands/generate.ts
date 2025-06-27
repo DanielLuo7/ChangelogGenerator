@@ -16,6 +16,12 @@ export async function generateChangelog( options: {
     const to = options.to || "HEAD";
     const from = options.from || await getLastPublished();
     const commits = await getCommitMessages(from, to);
+
+    if ( commits === undefined || commits.length === 0 ) {
+        console.log("No commits to read. Changelogs are up to date.");
+        process.exit();
+    }
+
     let changelog = `# Changelog\n\n## Changes ${from} to ${to}\n\n`; 
     changelog += commits.join("\n");
     changelog = await summarizeChangeLog(changelog)

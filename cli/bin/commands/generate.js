@@ -14,10 +14,13 @@ async function generateChangelog(options) {
     const to = options.to || "HEAD";
     const from = options.from || await (0, publish_1.getLastPublished)();
     const commits = await (0, git_1.getCommitMessages)(from, to);
+    if (commits === undefined || commits.length === 0) {
+        console.log("No commits to read. Changelogs are up to date.");
+        process.exit();
+    }
     let changelog = `# Changelog\n\n## Changes ${from} to ${to}\n\n`;
     changelog += commits.join("\n");
     changelog = await (0, common_1.summarizeChangeLog)(changelog);
-    console.log("commits", commits);
     if (options.output) {
         fs_1.default.writeFileSync(options.output, changelog, "utf-8");
     }

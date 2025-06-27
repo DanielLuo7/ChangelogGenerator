@@ -2,7 +2,11 @@ import { getRepoName, getRepoUrl } from "../utils/git"
 import simpleGit from "simple-git";
 
 const git = simpleGit()
-const BASE_URL = process.env.BASE_URL;
+
+const BASE_URL = process.env.BASE_URL || (process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://changelogger-lemon.vercel.app");
+
 
 
 export async function publishChangeLog(changelog: string, from: string, to: string, commits: string[]) {
@@ -45,5 +49,3 @@ export async function getLastPublished(): Promise<string> {
     return json.to_commit
 
 }
-
-

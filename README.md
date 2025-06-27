@@ -9,7 +9,7 @@ It includes:
 - **Database storage** via Supabase.
 - **Frontend website** to browse changelogs by repository.
 
-![Demo](assets/ChangeloggerDemo.gif)
+![Demo](assets/Demo.gif)
 
 ## How to run
 Clone the repo and install the dependencies. Then within the cli folder, run `pnpm link --global`. Now you will be able to run `changelogger` in any repo. run `changelogger init` and set up your API key. From there, you can run `changelogger generate` to create your changelogs. 

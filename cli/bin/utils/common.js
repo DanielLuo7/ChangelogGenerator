@@ -4,7 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.summarizeChangeLog = summarizeChangeLog;
+exports.prompt = prompt;
 const axios_1 = __importDefault(require("axios"));
+const readline_1 = __importDefault(require("readline"));
 const API_KEY = process.env.API_KEY;
 const MODEL = "mistralai/mistral-7b-instruct";
 async function summarizeChangeLog(changelog) {
@@ -61,4 +63,14 @@ function cleanSummaryOutput(markdown) {
         // Remove extra spaces
         .replace(/[ \t]+$/gm, '')
         .trim();
+}
+function prompt(question) {
+    const readLine = readline_1.default.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    return new Promise((resolve) => readLine.question(question, (answer) => {
+        readLine.close();
+        resolve(answer.trim());
+    }));
 }

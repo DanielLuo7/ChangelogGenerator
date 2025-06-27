@@ -6,18 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.init = init;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const readline_1 = __importDefault(require("readline"));
 const os_1 = __importDefault(require("os"));
-function prompt(question) {
-    const readLine = readline_1.default.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-    return new Promise((resolve) => readLine.question(question, (answer) => {
-        readLine.close();
-        resolve(answer.trim());
-    }));
-}
+const common_1 = require("../utils/common");
 async function writeToShellConfig(key, value) {
     const shell = process.env.SHELL || "";
     const home = os_1.default.homedir();
@@ -49,8 +39,8 @@ function appendToGitIgnore(file) {
 }
 async function init() {
     console.log("Initializing requirements for your changelogger...");
-    const apiKey = await prompt("Enter your OpenRouter API key: ");
-    const storeGlobally = ((await prompt("Set your API key globally in shell config? (y/N)")).toLowerCase() === "y");
+    const apiKey = await (0, common_1.prompt)("Enter your OpenRouter API key: ");
+    const storeGlobally = ((await (0, common_1.prompt)("Set your API key globally in shell config? (y/N)")).toLowerCase() === "y");
     if (storeGlobally) {
         await writeToShellConfig("API_KEY", apiKey);
     }

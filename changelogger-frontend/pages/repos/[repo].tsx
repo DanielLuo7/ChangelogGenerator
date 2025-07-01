@@ -19,9 +19,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .eq("repo_name", repoName)
     .order("published_at", { ascending: false });
 
+  const repoUrl = data?.[0]?.repo_url || null;
   return {
     props: {
       repoName,
+      repoUrl,
       changelogs: data || [],
     },
   };
@@ -29,9 +31,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function RepoChangelogsPage({
   repoName,
+  repoUrl,
   changelogs,
 }: {
   repoName: string;
+  repoUrl: string;
   changelogs: ChangelogEntry[];
 }) {
   return (
@@ -41,6 +45,16 @@ export default function RepoChangelogsPage({
       </Head>
 
       <h1 className="text-3xl font-bold mb-6">{repoName} – Changelog</h1>
+      {repoUrl && (
+         <a
+           href={repoUrl}
+           target="_blank"
+           rel="noopener noreferrer"
+           className="text-sm text-blue-600 hover:underline"
+         >
+           View Repository on GitHub
+         </a>
+        )}
 
       {changelogs.map((log, i) => (
         <div key={i} className="mb-10">

@@ -22,8 +22,19 @@ async function getCommitMessages(from, to) {
 async function getRepoUrl() {
     const remotes = await git.getRemotes(true);
     const origin = remotes.find(remote => remote.name == "origin");
-    return origin?.refs.fetch || "unknown";
+    let url = origin?.refs.fetch || "unknown";
+    if (url === "unknown") {
+        console.error("Could not find repo url");
+        process.exit();
+    }
+    return normalizeRepoUrl(url);
 }
+const normalizeRepoUrl = (url) => {
+    if (url.startsWith("git@github.com:")) {
+        return url.replace("git@github.com:", "https://github.com/").replace(/\.git$/, "");
+    }
+    return url;
+};
 async function getRepoName() {
     const url = await getRepoUrl();
     const match = url.match(/([^\/:]+\/[^\/\.]+)(\.git)?$/);

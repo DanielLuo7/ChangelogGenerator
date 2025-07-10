@@ -22,9 +22,6 @@ export async function publishChangeLog(changelog: string, from: string, to: stri
 
     if (response.status === 201) {
         console.log("Changelog successfully published");
-    } else {
-        const error = await response.json();
-        console.error("Failed to publish changelog:", error.error)
     }
 
 }
